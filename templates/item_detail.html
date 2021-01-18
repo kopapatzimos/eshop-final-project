@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="text-center mb-4">
+
+
+    <h2><u>Reviews for<br><br>{{ item.title }}</u></h2>
+    <br>
+    <h5>{{ item.review_set.count }} reviews </h5>
+    <br>
+
+
+
+
+    {% if item.review_set.all %}
+    <div>
+        <h4>Average rating :{{ item.average_rating | floatformat }} </h4>
+        <br>
+        <h4><b>Recent reviews</b></h4>
+        <br>
+
+        {% for review in item.review_set.all %}
+
+        <div>
+            <u><b>{{ review.user_name }}</b></u>
+            <br>
+            <em>{{ review.comment }}</em>
+
+            <h6>Rated {{ review.rating }} of 5 </h6>
+
+            <h5><a href="{% url 'review_product:review_detail' review.id %}">
+
+                    <br><br>
+                </a></h5>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No reviews for this item yet</p>
+    {% endif %}
+
+    <h2>Add your review</h2>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="{% url 'review_product:add_review' item.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Add" />
+    </form>
+
+</section>
+{% endblock content%}

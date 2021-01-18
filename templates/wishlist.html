@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+    <div class="container">
+
+        <div class="table-responsive text-nowrap">
+            <h2 class="text-light"><b>Wishlist</b></h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-light" scope="col">#</th>
+                        <th class="text-light" scope="col">Item title</th>
+                        <th class="text-light" scope="col">Price</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for wish_item in object.items.all %}
+
+
+
+
+
+                    <tr>
+                        <th class="text-light" scope="row">{{ forloop.counter }}</th>
+
+
+                        <td>
+                            <a class="text-light"
+                                href="{{wish_item.item.get_absolute_url}}">{{wish_item.item.title}}</a>
+                            <br><br>
+
+                        <td class="text-light">${{ wish_item.item.price }}</td>
+
+                        <td><a style='color: red;' href="{% url 'core:remove-from-wishlist' wish_item.item.slug %}">
+                                <i class="fas fa-trash float-right"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td class="text-danger" colspan='5'>Your wishlist is empty</td>
+                    </tr>
+
+                    {% endfor %}
+
+
+                </tbody>
+            </table>
+            <tr>
+                <td colspan="5">
+                    <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
+                </td>
+            </tr>
+        </div>
+
+    </div>
+</main>
+
+
+
+
+
+
+
+{% endblock content %}

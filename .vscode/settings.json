@@ -1,0 +1,21 @@
+{
+  "python.pythonPath": "C:\\Users\\Tzhmos\\envs\\eshop\\Scripts\\python.exe",
+  "editor.formatOnSave": true,
+  "python.linting.pycodestyleEnabled": true,
+  "python.linting.pylintPath": "pylint",
+  "python.linting.pylintArgs": [
+    "--load-plugins",
+    "pylint_django"
+  ],
+  "python.linting.pylintEnabled": true,
+  "python.venvPath": "${workspaceFolder}/env/bin/python3",
+  "python.linting.pycodestyleArgs": [
+    "--ignore=E501"
+  ],
+  "files.exclude": {
+    "**/*.pyc": true
+  },
+  "python.formatting.provider": "black",
+  "python.linting.enabled": false,
+  "python.autoComplete.extraPaths": []
+}

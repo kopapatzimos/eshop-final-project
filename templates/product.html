@@ -1,0 +1,525 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<main class="mt-5 pt-4">
+  <div class="container" id="product-section">
+    <div class="row">
+      <div class="col-md-5">
+        <a href="{{ item.get_absolute_url }}">
+          <div class="mask rgba-white-slight"></div>
+          <img src="{{item.image.url}}" class="img-fluid product" alt="">
+        </a>
+
+
+      </div>
+      <div class="col-md-7">
+        <br>
+        <h1 class="text-light"><b><em>{{item.title}}</em></b></h1>
+        <div class="row">
+          <div class="col-md-12">
+            <span class="badge mr-1">{{ object.get_category_display }}</span>
+          </div>
+        </div><!-- end row -->
+
+        <!-- edw theloume mia for gia ta asteria opws kai sto home page!!!!!!!!!!!!!!!!!!-->
+        <div class="row">
+          <div class="col-md-3">
+            {%if item.average_rating == 0 %}
+            <ul class="row asteri" style="margin-left:0.1rem;">
+              <li><i class="far fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <p class="text-light">({{ item.review_set.count }})</p>
+
+            </ul>
+            {%elif item.average_rating == 1 %}
+            <ul class="row asteri" style="margin-left:0.1rem;">
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <p class="text-light">({{ item.review_set.count }})</p>
+
+            </ul>
+
+            {% elif item.average_rating == 2 %}
+            <ul class="row asteri" style="margin-left:0.1rem;">
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <p class="text-light">({{ item.review_set.count }})</p>
+
+            </ul>
+            {%elif item.average_rating == 3 %}
+            <ul class="row asteri" style="margin-left:0.1rem;">
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <p class="text-light">({{ item.review_set.count }})</p>
+
+
+            </ul>
+            {%elif item.average_rating == 4 %}
+            <ul class="row asteri" style="margin-left:0.1rem;">
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="far fa-sm fa-star"></i></li>
+              <p class="text-light">({{ item.review_set.count }})</p>
+
+
+            </ul>
+            {%else %}
+            <ul class="row asteri" style="margin-left:0.1rem;">
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <li><i class="fas fa-sm fa-star"></i></li>
+              <p class="text-light">({{ item.review_set.count }})</p>
+
+            </ul>
+            {%endif%}
+
+
+
+
+
+
+          </div>
+
+        </div><!-- end row -->
+        <a href="#reviews">View Reviews</a><br>
+
+
+
+        <div class="row">
+          <div class="col-md-12 bottom-rule">
+            <p class="price-in-product">
+              {% if item.discount_price %}
+              <span class="mr-1">
+                <small><del>${{ item.price }}</del></small>
+              </span>
+              <span>${{ item.discount_price }}</span>
+              {% else %}
+              <span>${{ item.price }}</span>
+              {% endif %}
+            </p>
+          </div>
+        </div><!-- end row -->
+
+        <!-- quantity add -->
+        <form class="d-flex justify-content-left" action="{% url 'core:add_to_cart_quantity' item.slug %}"
+          method="post">
+          {% csrf_token %}
+
+          <input type="number" min="1" id="quantity" name="quantity" value="1" value="{{ quantity }}"
+            aria-label="Search" class="form-control" style="width: 100px">
+          <br>
+
+          <input type="submit" value="Add to cart" class="btn btn-primary btn-md my-0 p"><br><br>
+        </form>
+        <br>
+
+        <a href="{{item.get_add_to_wishlist_url }}" class="btn btn-light btn-md my-0 p">
+          Add to wishlist
+
+        </a>
+
+
+
+
+
+
+
+      </div><!-- end container -->
+      <form action="{% url 'review_product:add_review' item.id %}" method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <br>
+        <input class="btn aqua-gradient btn-rounded btn-sm my-0 mr-3" type="submit" value="Post Your Review" />
+      </form>
+
+
+
+
+
+
+      <!--Grid row-->
+
+      <!--Grid column-->
+
+      <!--Grid column-->
+
+
+      <!--Content-->
+
+      <div class="p-4">
+
+
+
+
+
+
+
+
+
+        <!-- taggit
+          {% for trip in trip_related %}
+          <h1>{{ trip.trip_title }}</h1>
+          {% endfor %} -->
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!--Grid column-->
+
+    </div>
+    <!--Grid row-->
+
+
+    <!--Grid row-->
+  </div>
+
+
+
+  <!-----------------TABS---------------------->
+  <div class="container">
+    <br><br>
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a data-toggle="pill" class="nav-link waves-effect" href="#description">Description</a>
+
+      </li>
+      <!--<li>
+        <a data-toggle="pill" class="nav-link waves-effect" href="#reviews">Reviews</a>
+      </li>-->
+      <li class="nav-item">
+        <a data-toggle="pill" class="nav-link waves-effect" href="#related">Related Products</a>
+      </li>
+
+
+    </ul>
+
+
+    <div class="tab-content">
+
+      <div id="description" class="tab-pane fade in active">
+        <br>
+
+
+        <h3 class="descr" style="color: white;">{{ object.description }}</h3>
+
+      </div>
+
+
+
+
+      <div id="related" class="tab-pane">
+        <!-- RELATED OBJECTS -->
+        <br><br>
+
+
+        <div class="row d-flex  wow fadeIn">
+
+          {% for i in related_items %}
+
+          <div class="col-lg-3 col-sm-6 mb-4">
+
+            <div class=" card card-cascade card-ecommerce wider  mb-5">
+
+              <div class=" view   overlay text-center ">
+                <img src="{{ i.image.url }}" class="img-fluid">
+                <div class="tag-title mr-auto">{{i.title}}
+                  {%if i.average_rating == 0 %}
+                  <ul class="row asteri rating">
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <p class="text-light">({{ i.review_set.count }})</p>
+
+                  </ul>
+                  {%elif i.average_rating == 1 %}
+                  <ul class="row asteri rating">
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <p class="text-light">({{ i.review_set.count }})</p>
+
+                  </ul>
+
+                  {% elif item.average_rating == 2 %}
+                  <ul class="row asteri rating">
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <p class="text-light">({{ i.review_set.count }})</p>
+
+                  </ul>
+                  {%elif i.average_rating == 3 %}
+                  <ul class="row asteri rating">
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <p class="text-light">({{ i.review_set.count }})</p>
+
+
+                  </ul>
+                  {%elif i.average_rating == 4 %}
+                  <ul class="row asteri rating">
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="far fa-sm fa-star"></i></li>
+                    <p class="text-light">({{ i.review_set.count }})</p>
+
+
+                  </ul>
+                  {%else %}
+                  <ul class="row asteri rating">
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <li><i class="fas fa-sm fa-star"></i></li>
+                    <p class="text-light">({{ i.review_set.count }})</p>
+
+                  </ul>
+                  {%endif%}
+
+
+
+                </div>
+
+                <a href="{{ i.get_absolute_url }}">
+
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+              <div class="card-footer text-center" style="font-size:xx-large;">
+                <strong>
+                  {% if i.discount_price %}
+
+                  <span>${{ i.discount_price }}</span>
+                  <span class="mr-1">
+
+                  </span>
+
+                  {% else %}
+                  <span>${{ i.price }}</span>
+                  {% endif %}
+                </strong>
+              </div>
+            </div>
+          </div>
+
+
+
+          {%endfor%}
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-----------------TABS---------------------->
+
+
+
+
+  <!------------- Review by user-------------------- -->
+
+
+  <div id="reviews">
+
+
+
+
+    <div class="review p-5">
+      <div class="row d-flex">
+
+      </div>
+
+      {%comment%}
+      <form action="{% url 'review_product:add_review' item.id %}" method="post">
+        {% csrf_token %}
+        <!-- {{ form.as_p }} -->
+        <label class="text-light" for="rating">Rating (0-5) : </label>
+        <input class="text-center form-control rating-bar ml-3" id="rating" min="0" max="5" value="5" type="number"
+          name="rating" value="{{ rating }}"><br>
+        <label class="text-light" for="comment">Comment : </label>
+        <textarea class="form-control form-control-sm ml-3 w-75" rows="5" maxlength="200" id="comment" type="text"
+          name="comment" placeholder="Write a comment..." value="{{ comment }}" required></textarea><br>
+
+        <input class="btn aqua-gradient btn-rounded btn-sm my-0 ml-3" type="submit" value="Comment" />
+        <a class="btn-light  btn-rounded btn-sm my-0 ml-3 " href="/product/{{item.slug}}">I changed my mind</a>
+      </form>
+      <br>
+      <br>
+      {%endcomment%}
+
+
+
+
+
+      {% if item.review_set.all %}
+      <div>
+
+
+        <em>
+          <h1 class="text-center" style="color: white;">Reviews:</h1><br>
+        </em>
+
+
+
+
+
+
+
+        {% for review in product_reviews %}
+        <div class="row d-flex fadeIn">
+
+
+
+
+        </div>
+
+
+        <div class="d-flex flex-column pl-3">
+
+
+
+          <em>
+
+            <h4 style=" color: rgb(244, 245, 243);"><i class="fas fa-user-circle" style="font-size:xx-large;"></i>
+
+              {{ review.user_name }}</h4>
+          </em>
+          {% if review.rating == 1 %}
+          <ul class="row  asteri" style="margin-left:0.1rem;">
+            <li><i class="fa fa-star"></i></li>
+            <li><i class="fa fa-star"></i></li>
+            <li><i class="fa fa-star"></i></li>
+            <li><i class="fa fa-star"></i></li>
+            <li><i class="fa fa-star"></i></li>
+          </ul>
+          {% elif review.rating == 2 %}
+          <ul class="row asteri" style="margin-left:0.1rem;">
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="far fa-sm fa-star"></i></li>
+            <li><i class="far fa-sm fa-star"></i></li>
+            <li><i class="far fa-sm fa-star"></i></li>
+          </ul>
+          {%elif review.rating == 3 %}
+          <ul class="row asteri" style="margin-left:0.1rem;">
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="far fa-sm fa-star"></i></li>
+            <li><i class="far fa-sm fa-star"></i></li>
+          </ul>
+          {%elif review.rating == 4 %}
+          <ul class="row asteri" style="margin-left:0.1rem;">
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="far fa-sm fa-star"></i></li>
+          </ul>
+          {%else %}
+          <ul class="row asteri" style="margin-left:0.1rem;">
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="fas fa-sm fa-star"></i></li>
+            <li><i class="fas fa-sm fa-star"></i></li>
+          </ul>
+          {%endif%}
+
+
+
+          <textarea class="review-comment" rows="3" readonly>{{ review.comment }}</textarea>
+
+
+
+
+
+
+
+
+
+
+          <p class="grey-text">{{review.pub_date}}</p>
+
+          <h5><a href="{% url 'review_product:review_detail' review.id %}">
+
+              <br><br>
+            </a></h5>
+
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <h4 style=" color: rgb(245, 226, 226); font-size:larger;">No reviews for this item yet</h4>
+
+
+      {% endif %}
+
+
+
+
+    </div>
+
+
+
+  </div>
+  <!------------- Review by user-------------------- -->
+
+
+
+
+
+
+
+  <br><br><br>
+
+  {% endblock content %}

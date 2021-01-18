@@ -1,0 +1,363 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>{% block head_title %}{% endblock %}</title>
+  {% block extra_head %}
+  {% endblock %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+
+  <style type="text/css">
+    html,
+    body,
+    header,
+    .carousel {
+      height: 60vh;
+      scroll-behavior: smooth;
+    }
+
+    @media (max-width: 740px) {
+
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+
+    label {
+      color: rgb(86, 111, 194);
+    }
+
+    @media (min-width: 800px) and (max-width: 850px) {
+
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+
+    body {
+      /*background: linear-gradient(to right, #93cfc7, #99cec2);*/
+      background: linear-gradient(to right, rgb(65, 64, 64), rgb(31, 30, 30));
+      min-height: 100vh;
+      font-family: Florence;
+    }
+
+    .panw a .logo {
+      font-size: larger;
+    }
+
+    .diaxwrismos {
+      border-top: 1px solid white;
+    }
+
+
+    .panw .nav-item {
+
+      font-size: larger;
+    }
+
+    .nav-item a:hover {
+      background-color: rgba(0, 0, 0, 0.027);
+
+    }
+
+    .name-of-item {
+      font-size: smaller;
+    }
+
+    .asteri {
+      list-style-type: none;
+      padding: 0;
+
+    }
+
+    .rating {
+      margin-left: 30%
+    }
+
+
+    .fa {
+      color: #f2dd1d
+    }
+
+
+
+    .card-img-top {
+      width: 90%;
+      height: 14.06rem
+    }
+
+    .img-fluid {
+      width: 100%;
+      height: 20rem;
+    }
+
+    .card-body {
+      height: min-content;
+    }
+
+    .view {
+      background-color: #6b6b6b;
+      padding: 1rem;
+    }
+
+    .product {
+      width: 80% !important;
+      height: 90%;
+      padding: 1rem;
+      background-color: #141414;
+    }
+
+    .product-related {
+      width: 8rem;
+      height: 10rem;
+
+
+    }
+
+    .rating {
+      color: white;
+    }
+
+    .errorlist {
+      color: white;
+    }
+
+
+    .view-related {
+      padding: 0
+    }
+
+    .nav-tabs .nav-link.active {
+      background-color: transparent;
+      color: white;
+    }
+
+    .nav-tabs .nav-link {
+      color: white;
+    }
+
+    .review-comment {
+      border: none;
+
+      color: rgb(245, 226, 226);
+      font-size: larger;
+      font-family: Sans-serif;
+      background-color: transparent;
+
+
+
+
+
+    }
+
+
+
+    .descr {
+      margin-left: 3rem;
+
+
+    }
+
+    .fa-user-circle {
+      font-size: xx-large
+    }
+
+
+
+    .navbar .nav-item {
+      font-size: large;
+    }
+
+
+
+
+
+    .price {
+      color: #ff4517;
+      font-weight: 600;
+      font-family: Florence;
+      font-size: larger;
+    }
+
+    .price-in-product {
+      color: #fffbfa;
+      font-weight: 600;
+      font-family: Florence;
+      font-size: xx-large;
+
+    }
+
+    .fa-heart:hover {
+      background-color: rgb(53, 53, 53);
+    }
+
+    .fa-star {
+      color: rgb(255, 230, 0);
+    }
+
+
+
+    .nav-tabs {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+
+    .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+      color: #f1f1f1;
+    }
+
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 18px;
+      }
+    }
+
+
+    .searchbutton {
+      background: none;
+      padding: 0px;
+      border: none;
+    }
+
+
+
+    .tag-title {
+      position: absolute;
+      bottom: 0;
+      background: rgb(0, 0, 0);
+      background: rgba(0, 0, 0, 0.5);
+      /* Black see-through */
+      color: #f1f1f1;
+      width: 100%;
+      transition: .5s ease;
+      opacity: 0;
+      color: white;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .view:hover .tag-title {
+      opacity: 1;
+    }
+
+
+
+    .hr-filtrou {
+      border: 1px solid white;
+
+    }
+
+    .rating-bar {
+      width: min-content
+    }
+
+    textarea {
+      resize: none;
+    }
+  </style>
+</head>
+
+{% include "navbar.html" %}
+
+<body>
+
+  <div class="mt-5 pt-4">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+
+  {% block content %}
+  {% endblock content %}
+
+  {% block extra_body %}
+  {% endblock %}
+
+  {% include "footer.html" %}
+  {% include "scripts.html" %}
+
+  {% block extra_scripts %}
+  {% endblock extra_scripts %}
+
+  <script>
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+
+  </script>
+
+
+
+
+
+
+</body>
+
+
+
+</html>

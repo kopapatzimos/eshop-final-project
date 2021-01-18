@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+    <!-------------FILTROOO--------->
+
+    <div class="container">
+
+
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+
+            <!-- Navbar brand -->
+            <span class="navbar-brand">Categories:</span>
+
+            <!-- Collapse button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+                aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" id="basicExampleNav">
+
+                <!-- Links -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">All
+
+                        </a>
+                    </li>
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="Guitars">Guitars</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="Basses">Basses
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item text-light" style="cursor:pointer" onclick="openNav()">
+                        <a class="nav-link mr-5">Filters</a>
+                    </li>
+
+
+
+                </ul>
+                <!-- Links -->
+                <!--------SEARCH BAR-->
+                <div class="form-inline ml-auto">
+                    <form class="form-inline active-purple-3 active-purple-4" action="{% url 'search:searchposts' %}"
+                        method="GET" value="{{request.GET.q}}">
+                        <input class="form-control form-control-sm ml-3 w-75" type="text" name="q"
+                            value="{{request.GET.q}}" placeholder="Search..." aria-label="Search">
+                        <button type="submit" class="searchbutton"><i class="fas fa-search text-white ml-3"
+                                aria-hidden="true"></i></button>
+                    </form>
+                </div>
+                <!----SEARCH STO NAVBAR-->
+
+
+
+
+                <!-------------FILTROOO--------->
+
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <form action="{% url 'core:price_filter' %} " method="post">
+                        {% csrf_token %}
+
+                        <h2 class="text-light text-center">Sort by:</h2><br>
+                        <div class="dropdown text-center">
+                            <button class="btn btn-dark btn-md my-0 p dropdown-toggle" style="width:100%;" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                Price
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <label class="text-dark" for="highest">Highest price : </label>
+                                <input class="text-center form-control form-control-sm ml-3 w-75" id="highest"
+                                    type="text" name="highest" value="{{ highest_price }}"><br>
+                                <label class="text-dark" for="lowest">Lowest price: </label>
+                                <input class="text-center form-control form-control-sm ml-3 w-75" id="lowest"
+                                    type="text" name="lowest" value="{{ lowest_price }}"><br>
+                                <input class="btn btn-dark btn-md my-0 p btn-rounded  ml-3" type="submit"
+                                    value="Search"><br><br>
+
+                            </div>
+                        </div>
+
+                    </form>
+                    <br><br>
+                    <a class="btn btn-dark btn-md my-0 p" href="most_popular">Popularity</a>
+
+                </div>
+                <!-------------FILTROOO--------->
+
+
+
+
+                <!-- Collapsible content -->
+
+        </nav>
+        <!--/.Navbar-->
+
+        <!--Section: Products v.3-->
+        <section class="text-center mb-4">
+
+            <div class="row wow fadeIn">
+
+                {% for item in object_list %}
+                {%if item.category == 'B'%}
+                <div class="col-lg-3 col-md-6 mb-4">
+
+                    <div class="card card-cascade card-ecommerce wider mb-5">
+
+                        <div class="view  overlay text-center zoom">
+                            {% comment %}
+                            {% endcomment %}
+                            <img src="{{ item.image.url }}" class="img-fluid">
+                            <a href="{{ item.get_absolute_url }}">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                        <div class="card-body text-center">
+                            <a href="{{ item.get_add_to_wishlist_url }}">
+                                <i class="fas fa-heart" style="float:right; color:red;"></i>
+                            </a>
+                            <a href="" class="grey-text card-title">
+                                <h5><em>{{ item.get_category_display }}</em></h5>
+                            </a>
+                            <h5>
+                                <strong>
+                                    <a href="{{ item.get_absolute_url }}" class="dark-grey-text card-text">
+                                        {{item.title}}
+                                        <br>
+
+                                        <span class="badge badge-pill {{ item.get_label_display }} bg-dark">NEW</span>
+                                    </a>
+                                </strong>
+                            </h5>
+
+                            <p class="price-wrap mt-2 price">
+                                <strong>
+                                    {% if item.discount_price %}
+
+                                    <span>${{ item.discount_price }}</span>
+                                    <span class="mr-1 text-size-sm">
+                                        <small><del>${{ item.price }}</del></small>
+                                    </span>
+
+                                    {% else %}
+                                    <span>${{ item.price }}</span>
+                                    {% endif %}
+                                </strong>
+                            </p>
+                            {%if item.average_rating == 0 %}
+                            <ul class="row asteri rating">
+                                <li><i class="far fa-sm fa-star"></i></li>
+                                <li><i class="far fa-sm fa-star"></i></li>
+                                <li><i class="far fa-sm fa-star"></i></li>
+                                <li><i class="far fa-sm fa-star"></i></li>
+                                <li><i class="far fa-sm fa-star"></i></li>
+                                <p class="text-dark">({{ item.review_set.count }})</p>
+
+                            </ul>
+                            {%elif item.average_rating == 1 %}
+                            <ul class="row asteri rating">
+                                <li><i class="fas fa-sm fa-star"></i></li>
+                                <li><i class="far fa-sm fa-star"></i></li>
+                                <li><i class="far fa-sm fa-star"></i></li>
+                                <li><i class="far fa-sm fa-star"></i></li>
+                                <li><i class="far fa-sm fa-star"></i></li>
+                                <p class="text-dark">({{ item.review_set.count }})</p>
+
+
+
+                                {% elif item.average_rating == 2 %}
+                                <ul class="row asteri rating">
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="far fa-sm fa-star"></i></li>
+                                    <li><i class="far fa-sm fa-star"></i></li>
+                                    <li><i class="far fa-sm fa-star"></i></li>
+                                    <p class="text-dark">({{ item.review_set.count }})</p>
+
+                                </ul>
+                                {%elif item.average_rating == 3 %}
+                                <ul class="row asteri rating">
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="far fa-sm fa-star"></i></li>
+                                    <li><i class="far fa-sm fa-star"></i></li>
+                                    <p class="text-dark">({{ item.review_set.count }})</p>
+
+
+                                </ul>
+                                {%elif item.average_rating == 4 %}
+                                <ul class="row rating asteri">
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="far fa-sm fa-star"></i></li>
+                                    <p class="text-dark">({{ item.review_set.count }})</p>
+
+
+                                </ul>
+                                {%else %}
+                                <ul class="row asteri rating">
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <li><i class="fas fa-sm fa-star"></i></li>
+                                    <p class="text-dark">({{ item.review_set.count }})</p>
+
+                                </ul>
+                                {%endif%}
+                                <div class="card-footer">
+                                    <a href="{{ item.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p">
+                                        Add to cart
+                                        <i class="fas fa-shopping-cart ml-1"></i>
+                                    </a>
+                                </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                {%endif%}
+                {% endfor %}
+            </div>
+
+        </section>
+        <!--Section: Products v.3-->
+
+        <!--Pagination-->
+
+        {% if is_paginated %}
+        <nav class="d-flex justify-content-center wow fadeIn">
+            <ul class="pagination pg-blue">
+
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+    </div>
+</main>
+
+{% endblock content %}
