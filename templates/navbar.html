@@ -13,24 +13,13 @@
     <!-- Collapse -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <i class="text-light fas fa-sliders-h"></i> </button>
 
     <!-- Links -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
       <!-- Left -->
-      <ul class="navbar-nav mr-auto">
-        {% comment %} <li class="nav-item active">-
-          <a class="nav-link waves-effect" href="/">Home
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link waves-effect" href="/checkout">
-            Checkout</a>
-        </li> {% endcomment %}
-      </ul>
+    
 
       <!-- Right -->
       <ul class="navbar-nav nav-flex-icons ml-auto">
@@ -66,11 +55,8 @@
       </ul>
       {% else %}
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav8"
-        aria-controls="basicExampleNav8" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="basicExampleNav8">
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav nav-flex-icons ml-auto">
 
           <li class="nav-item pl-2 mb-2 mb-md-0">
@@ -85,17 +71,6 @@
       </div>
 
 
-      <!--<li class="nav-item">
-          <a class="nav-link waves-effect" href="{% url 'account_login' %}">
-            <span class="clearfix d-none d-sm-inline-block text-danger"> Login </span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link waves-effect" href="{% url 'account_signup' %}">
-            <span class="clearfix d-none d-sm-inline-block text-success"> Signup </span>
-          </a>
-        </li>
-      -->
 
       {% endif %}
       </ul>
