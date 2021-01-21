@@ -576,7 +576,7 @@ def add_to_cart_quantity(request, slug):
                 order_item.quantity += quantity
                 order_item.save()
                 messages.info(request, "This item quantity was updated.")
-                return redirect("http://127.0.0.1:8000/product/" + item.slug)
+                return redirect("http://83.212.78.182/product/" + item.slug)
             else:
 
                 order.items.add(order_item)
@@ -584,7 +584,7 @@ def add_to_cart_quantity(request, slug):
                 order_item.save()
                 # order_item.quantity += (quantity - 1)
                 messages.info(request, "This item was added to your cart.")
-                return redirect("http://127.0.0.1:8000/product/" + item.slug)
+                return redirect("http://83.212.78.182/product/" + item.slug)
         else:
             ordered_date = timezone.now()
             order = Order.objects.create(user=request.user, ordered_date=ordered_date)
@@ -593,8 +593,8 @@ def add_to_cart_quantity(request, slug):
             order_item.quantity = quantity
             order_item.save()
             messages.info(request, "This item was added to your cart.")
-            return redirect("http://127.0.0.1:8000/product/" + item.slug)
-    return redirect("http://127.0.0.1:8000/product/" + item.slug)
+            return redirect("http://83.212.78.182/product/" + item.slug)
+    return redirect("http://83.212.78.182/product/" + item.slug)
 
 
 @login_required
